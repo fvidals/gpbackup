@@ -5,7 +5,6 @@ Provide GoPro incremental backup
 """
 
 from goprocam import GoProCamera, constants
-from gpbackup import DiskSpace
 from gpbackup import DiskUsage
 import sys
 import os
