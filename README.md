@@ -2,7 +2,7 @@
 
 This is a incremental backup, that copy the Gopro media content
 
-The initial idea was run this application on Raspbery Pi, for use my travels, without having to take a laptop always in my bag, safing space and being carefree
+The initial idea was run this application on Raspberry Pi, for use in my travels, without having to take a laptop always in my bag, safing space and being carefree
 
 ## How's work
 Install this application in one device
