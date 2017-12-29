@@ -95,7 +95,7 @@ class GPBackup:
         except:
             self.log().info('Cannot list media')
             self.log().info(sys.exc_info()[0])
-            return
+            sys.exit()
 
         for media in medias:
             dirName = media[0]
@@ -120,6 +120,7 @@ class GPBackup:
             except:
                 self.log().info('Cannot download file %s/%s' % (dirName, fileName))
                 self.log().info(sys.exc_info()[0])
+                sys.exit()
 
             if os.path.isfile(pathOutputFile):
                 if filecmp.cmp(pathTmpFile, pathOutputFile):
@@ -140,9 +141,13 @@ class GPBackup:
         return self.goprocam
 
     def notifyGopro(self, seconds = 2):
-        self.gopro().locate(constants.Locate.Start)
-        time.sleep(seconds)
-        self.gopro().locate(constants.Locate.Stop)
+        try:
+            self.gopro().locate(constants.Locate.Start)
+            time.sleep(seconds)
+            self.gopro().locate(constants.Locate.Stop)
+        except:
+            self.log('Cannot possible notify camera')
+            sys.exit()
 
     def isSync(self):
         return (self.isStarted
@@ -153,20 +158,14 @@ class GPBackup:
             self.gopro().gpControlSet(constants.Setup.WIFI, constants.Setup.Wifi.OFF)
         except:
             self.log().info('Cannot possible turn off wifi')
+            sys.exit()
 
     def turnOff(self):
         try:
             self.gopro().power_off()
         except:
             self.log('Cannot possible turn off camera')
-
-    def logDiskSpace(self):
-        pattern = re.compile(r"(win32|java)")
-
-        if not pattern.match(sys.platform):
-            diskSpace = DiskSpace.DiskSpace()
-            if diskSpace.is_low():
-                sys.log().info("Disk space is low! used %s" % diskSpace.get_use_as_percentage())
+            sys.exit()
 
     def logkDiskUsage(self):
         diskUsage = DiskUsage.DiskUsage();
@@ -177,8 +176,6 @@ class GPBackup:
         self.log().info('Size of media directory: %s' % (sizeFormatted))
 
     def run(self):
-        self.logDiskSpace()
-
         self.log().info('Start backup now')
 
         if (self.options['notifyOnStart']):
@@ -192,7 +189,6 @@ class GPBackup:
         self.log().info('Files copied: %d' % self.summary['copied'])
         self.log().info('Gopro is syncronized: %s' % ('yes' if self.isSync() else 'no'))
         self.logkDiskUsage()
-        self.logDiskSpace()
 
         if (self.options['notifyOnStart']):
             self.notifyGopro(10)
