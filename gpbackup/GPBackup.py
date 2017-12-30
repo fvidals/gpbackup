@@ -145,7 +145,7 @@ class GPBackup:
             time.sleep(seconds)
             self.gopro().locate(constants.Locate.Stop)
         except:
-            self.log('Cannot possible notify camera')
+            self.log().info('Cannot possible notify camera')
             sys.exit()
 
     def isSync(self):
