@@ -157,7 +157,6 @@ class GPBackup:
             self.gopro().gpControlSet(constants.Setup.WIFI, constants.Setup.Wifi.OFF)
         except:
             self.log().info('Cannot possible turn off wifi')
-            sys.exit()
 
     def turnOff(self):
         try:
