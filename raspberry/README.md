@@ -3,11 +3,11 @@
 ## Install
 Install the depedencies
 ```
-$ apt-get install python3-pip
+$ sudo apt-get install python3-pip
 ```
 
 ```
-$ pip3 install goprocam
+$ sudo pip3 install goprocam
 ```
 
 Download this project and unzip
@@ -23,7 +23,6 @@ $ su
 ```
 
 ## Network Settings
-
 Edit `wpa_supplicant.conf`
 ```
 # nano /etc/wpa_supplicant/wpa_supplicant.conf
@@ -51,8 +50,10 @@ network={
 ```
 
 ## Add Service Backup
-
 Copy [`gpbackup.sh`](gpbackup.sh) to init scripts directory
+
+Note: check the `WORKDIR` constant in script, if you changed the application path
+
 ```
 # cp /srv/apps/gpbackup/raspberry/gpbackup.sh /etc/init.d/gpbackup
 ```
